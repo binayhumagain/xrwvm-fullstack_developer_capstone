@@ -57,7 +57,7 @@ def registration(request):
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except Exception as e: # Catch specific exception
+    except Exception as e:  # Catch specific exception
         logger.exception(e)
         # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
@@ -94,7 +94,7 @@ def get_cars(request):
     for car_model in car_models:
         cars.append(
             {
-                "CarModel": car_model.name, 
+                "CarModel": car_model.name,
                 "CarMake": car_model.car_make.name
             }
         )
@@ -150,7 +150,7 @@ def add_review(request):
         data = json.loads(request.body)
         try:
             response = post_review(data)
-            return JsonResponse({"status": 200})
+            return JsonResponse({"status": 200, "response": response})
         except Exception as e:  # Catch specific exception
             logger.exception(e)
             return JsonResponse(
@@ -162,7 +162,7 @@ def add_review(request):
     else:
         return JsonResponse(
             {
-                "status": 403, 
+                "status": 403,
                 "message": "Unauthorized"
             }
         )
